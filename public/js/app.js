@@ -9,6 +9,11 @@ var currentlyWidget = new Vue({
     humidity: 0.71,
     time: 1000000
   },
+  methods: {
+    iconUrl: function(iconString){
+      return `/images/${iconString}.png`;
+    }
+  },
   created: function(){
     axios.get('/weather/29.1,-89.4')
         .then(function(response){
