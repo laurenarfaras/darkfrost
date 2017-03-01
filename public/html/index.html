@@ -7,6 +7,8 @@
   <title>DarkFrost</title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/weather-icons.css">
+  <link rel="stylesheet" href="/css/weather-icons-wind.css">
   <script src="https://unpkg.com/vue"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
@@ -37,10 +39,13 @@
   <div id="daily">
     <div>
       <h2>{{ summary }}</h2>
-      <div><img :src="iconUrl(icon)" alt="weather icon"></div>
+      <div>
+        <i :class="iconName(icon)"></i>
+      </div>
     </div>
   </div>
-  <script src="/js/skycon.js" charset="utf-8"></script>
+
   <script src="/js/app.js" charset="utf-8"></script>
+
 </body>
 </html>

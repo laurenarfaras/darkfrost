@@ -35,11 +35,11 @@ var dailyWidget = new Vue({
   el: "#daily",
   data: {
     summary: "",
-    icon: ""
+    icon: "rain"
   },
   methods: {
-    iconUrl: function(iconString){
-      return `/images/${iconString}.png`;
+    iconName: function(iconString){
+      return `wi wi-forecast-io-${iconString}`;
     }
   },
   created: function(){
