@@ -15,7 +15,7 @@ var currentlyWidget = new Vue({
     iconName: function(iconString){
       return `wi wi-forecast-io-${iconString}`;
     },
-    updateWeather: function(){
+    getWeather: function(lat, lon) {
       var url = `/weather/${this.latitude},${this.longitude}`;
       axios.get(url)
           .then(function(response){
@@ -30,22 +30,13 @@ var currentlyWidget = new Vue({
           .catch(function(error){
             console.log(error);
           });
+    },
+    updateWeather: function(){
+      this.getWeather(this.latitude, this.longitude);
     }
   },
   created: function(){
-    axios.get('/weather/29.1,-81.4')
-        .then(function(response){
-          currentlyWidget.apparentTemperature = response.data.currently.apparentTemperature;
-          currentlyWidget.summary = response.data.currently.summary;
-          currentlyWidget.icon = response.data.currently.icon;
-          currentlyWidget.precipProbability = response.data.currently.precipProbability;
-          currentlyWidget.humidity = response.data.currently.humidity;
-          currentlyWidget.time = response.data.currently.time;
-          console.log(response.data);
-        })
-        .catch(function(error){
-          console.log(error);
-        });
+    this.getWeather(29.1, -81.4);
   }
 });
 

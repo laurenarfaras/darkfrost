@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>DarkFrost</title>
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> -->
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/weather-icons.css">
   <link rel="stylesheet" href="/css/weather-icons-wind.css">
@@ -19,7 +19,7 @@
       <input type="text" placeholder="Latitude: " v-model="latitude">
       <input type="text" placeholder="Longitude: " v-model="longitude">
       <button v-on:click="updateWeather()">Update Weather</button>
-      <h4>{{ location }}</h4>
+      <h4 id="currently-location">{{ location }}</h4>
     </header>
     <main>
       <div>
@@ -43,7 +43,7 @@
     <div>
       <h2>{{ summary }}</h2>
       <div>
-        <i :class="iconName(icon)"></i>
+        <i :class="iconName(icon)" alt="weather icon"></i>
       </div>
     </div>
   </div>
