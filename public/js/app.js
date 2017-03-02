@@ -30,3 +30,26 @@ var currentlyWidget = new Vue({
         });
   }
 });
+
+var dailyWidget = new Vue({
+  el: "#daily",
+  data: {
+    summary: "",
+    icon: "rain"
+  },
+  methods: {
+    iconName: function(iconString){
+      return `wi wi-forecast-io-${iconString}`;
+    }
+  },
+  created: function(){
+    axios.get("/weather/29.1, -89.4")
+        .then(function(response){
+          dailyWidget.summary = response.data.daily.summary;
+          dailyWidget.icon = response.data.daily.icon;
+        })
+        .catch(function(error){
+          console.log(error);
+        });
+  }
+});
