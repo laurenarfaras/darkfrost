@@ -13,9 +13,6 @@ var currentlyWidget = new Vue({
     longitude: -81.4
   },
   methods: {
-    iconName: function(iconString){
-      return `wi wi-forecast-io-${iconString}`;
-    },
     getCoordinates: function(city, state){
       var address = `${city},${state}`;
       var url = `/location/${address}`;
@@ -59,6 +56,8 @@ var currentlyWidget = new Vue({
 var dailyWidget = new Vue({
   el: "#daily",
   data: {
+    city: "Gainesville",
+    state: "FL",
     summary: "",
     icon: "rain",
     time: 10000000,
@@ -88,6 +87,20 @@ var dailyWidget = new Vue({
       }
       return `${dayOfWeek}`;
     },
+    getDailyCoordinates: function(city, state){
+      var address = `${city},${state}`;
+      var url = `/location/${address}`;
+      axios.get(url)
+          .then(function(response){
+            this.latitude = response.data.results[0].geometry.location.lat;
+            this.longitude = response.data.results[0].geometry.location.lng;
+            // console.log(response.data.results[0].geometry.location.lat);
+            this.getDailyWeather(this.latitude, this.longitude);
+          }.bind(this))
+          .catch(function(error){
+            console.log(error);
+          });
+    },
     getDailyWeather: function(lat, lon){
       var url = `/weather/${lat},${lon}`;
       axios.get(url)
@@ -100,16 +113,22 @@ var dailyWidget = new Vue({
           .catch(function(err){
             console.log(err);
           });
+    },
+    updateDailyWeather: function(){
+      this.getDailyCoordinates(this.city, this.state);
+      // this.getWeather(this.latitude, this.longitude);
     }
   },
   created: function(){
-    this.getDailyWeather(29.1, -89.4);
+    this.getDailyCoordinates("Gainesville", "FL");
   }
 });
 
 var hourlyWidget = new Vue({
   el: "#hourly",
   data: {
+    city: "Gainesville",
+    state: "FL",
     summary: "it's gonna rain!",
     icon: "cloudy",
     apparentTemperature: 79,
@@ -126,6 +145,20 @@ var hourlyWidget = new Vue({
       var minutes = date.getMinutes();
       return `${month + 1}/${day}/${year} ${hour}:${minutes < 9 ? '0' + minutes : minutes}`;
     },
+    getHourlyCoordinates: function(city, state){
+      var address = `${city},${state}`;
+      var url = `/location/${address}`;
+      axios.get(url)
+          .then(function(response){
+            this.latitude = response.data.results[0].geometry.location.lat;
+            this.longitude = response.data.results[0].geometry.location.lng;
+            // console.log(response.data.results[0].geometry.location.lat);
+            this.getHourlyWeather(this.latitude, this.longitude);
+          }.bind(this))
+          .catch(function(error){
+            console.log(error);
+          });
+    },
     getHourlyWeather: function(lat, lon){
       var url = `/weather/${lat},${lon}`;
       axios.get(url)
@@ -139,16 +172,21 @@ var hourlyWidget = new Vue({
           .catch(function(err){
             console.log(err);
           });
+    },
+    updateHourlyWeather: function(){
+      this.getHourlyCoordinates(this.city, this.state);
     }
   },
   created: function(){
-    this.getHourlyWeather(29.1, -84.1);
+    this.getHourlyCoordinates("Gainesville", "FL");
   }
 });
 
 var minutelyWidget = new Vue({
   el: "#minutely",
   data: {
+    city: "Gainesville",
+    state: "FL",
     summary: "it's gonna rain!",
     icon: "cloudy",
     apparentTemperature: 79,
@@ -183,6 +221,20 @@ var minutelyWidget = new Vue({
       var minutes = date.getMinutes();
       return `${dayOfWeek}, ${hour}:${minutes < 9 ? '0' + minutes : minutes}`;
     },
+    getMinutelyCoordinates: function(city, state){
+      var address = `${city},${state}`;
+      var url = `/location/${address}`;
+      axios.get(url)
+          .then(function(response){
+            this.latitude = response.data.results[0].geometry.location.lat;
+            this.longitude = response.data.results[0].geometry.location.lng;
+            // console.log(response.data.results[0].geometry.location.lat);
+            this.getMinutelyWeather(this.latitude, this.longitude);
+          }.bind(this))
+          .catch(function(error){
+            console.log(error);
+          });
+    },
     getMinutelyWeather: function(lat, lon){
       var url = `/weather/${lat},${lon}`;
       axios.get(url)
@@ -196,9 +248,12 @@ var minutelyWidget = new Vue({
           .catch(function(err){
             console.log(err);
           });
+    },
+    updateMinutelyWeather: function(){
+      this.getMinutelyCoordinates(this.city, this.state);
     }
   },
   created: function(){
-    this.getMinutelyWeather(29.1, -84.1);
+    this.getMinutelyCoordinates("Gainesville", "FL");
   }
 });

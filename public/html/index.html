@@ -17,10 +17,10 @@
   <div id="currently">
     <header>
       <h2>Currently:</h2>
-      <input type="text" placeholder="Latitude: " v-model="city">
-      <input type="text" placeholder="Longitude: " v-model="state">
+      <input type="text" placeholder="City: " v-model="city">
+      <input type="text" placeholder="State: " v-model="state">
       <button v-on:click="updateWeather()">Update Weather</button>
-      <div id="currently-location">{{ city }}, {{state}}</div>
+      <div class="currently-location location">{{ city }}, {{state}}</div>
     </header>
     <main>
       <div>
@@ -43,6 +43,10 @@
   <div id="daily">
     <header>
       <h2>Daily: </h2>
+      <input type="text" placeholder="City: " v-model="city">
+      <input type="text" placeholder="State: " v-model="state">
+      <button v-on:click="updateDailyWeather()">Update Weather</button>
+      <div class="daily-location location">{{ city }}, {{state}}</div>
       <div>
         {{ summary }}
       </div>
@@ -62,6 +66,10 @@
   <div id="hourly">
     <header>
       <h2>Hourly: </h2>
+      <input type="text" placeholder="City: " v-model="city">
+      <input type="text" placeholder="State: " v-model="state">
+      <button v-on:click="updateHourlyWeather()">Update Weather</button>
+      <div class="hourly-location location">{{ city }}, {{state}}</div>
       <div>
         {{ summary }}
       </div>
@@ -84,6 +92,10 @@
   <div id="minutely">
     <header>
       <h2>Minutely: </h2>
+      <input type="text" placeholder="City: " v-model="city">
+      <input type="text" placeholder="State: " v-model="state">
+      <button v-on:click="updateMinutelyWeather()">Update Weather</button>
+      <div class="minutely-location location">{{ city }}, {{state}}</div>
       <div>
         {{ summary }}
       </div>
