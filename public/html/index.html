@@ -53,7 +53,7 @@
     <main>
       <ul>
         <li v-for="day in days">
-          <i v-bind:class="'daily-icon wi wi-forecast-io-' + icon" alt="weather icon"></i> - {{ day.summary }} - {{ getDate(day.time) }}
+          <i v-bind:class="'daily-icon wi wi-forecast-io-' + day.icon" alt="weather icon"></i> - {{ day.summary }} - {{ getDate(day.time) }}
         </li>
       </ul>
     </main>

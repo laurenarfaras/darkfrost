@@ -132,6 +132,7 @@ var hourlyWidget = new Vue({
             this.summary = hourlyData.summary;
             this.icon = hourlyData.icon;
             this.hours = hourlyData.data;
+            this.apparentTemperature = hourlyData.apparentTemperature;
           }.bind(this))
           .catch(function(err){
             console.log(err);
