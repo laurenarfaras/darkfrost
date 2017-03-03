@@ -12,11 +12,13 @@ h2 {
 }
 
 #currently, #daily, #hourly, #minutely {
+  display: inline-flex;
   background-color: rgba(80, 81, 79, 0.9);
   border: 1px solid #50514F;
   border-radius: 8px;
   padding: 1.5em;
   margin: 1em;
+  width: 15em;
 }
 
 i {

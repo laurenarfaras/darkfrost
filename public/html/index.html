@@ -11,105 +11,114 @@
   <link rel="stylesheet" href="/css/weather-icons-wind.css">
   <script src="https://unpkg.com/vue"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
 </head>
 <body>
 
   <div id="currently">
-    <header>
-      <h2>Currently:</h2>
-      <input type="text" placeholder="City: " v-model="city">
-      <input type="text" placeholder="State: " v-model="state">
-      <button v-on:click="updateWeather()">Update Weather</button>
-      <div class="currently-location location">{{ city }}, {{state}}</div>
-    </header>
-    <main>
-      <div>
-        {{ apparentTemperature }}
-      </div>
-      <div>
-        <div>{{ summary }}</div>
-        <div><i v-bind:class="'wi wi-forecast-io-' + icon" alt="weather icon"></i></div>
-      </div>
-      <div>
-        <div>{{ precipProbability }}</div>
-        <div>{{ humidity }}</div>
-      </div>
-    </main>
-    <footer>
-      <div>{{ time }}</div>
-    </footer>
+    <div class="contents">
+      <header>
+        <h2>Currently:</h2>
+        <input type="text" placeholder="City: " v-model="city">
+        <input type="text" placeholder="State: " v-model="state">
+        <button v-on:click="updateWeather()">Update Weather</button>
+        <div class="currently-location location">{{ city }}, {{state}}</div>
+      </header>
+      <main>
+        <div>
+          {{ apparentTemperature }}
+        </div>
+        <div>
+          <div>{{ summary }}</div>
+          <div><i v-bind:class="'wi wi-forecast-io-' + icon" alt="weather icon"></i></div>
+        </div>
+        <div>
+          <div>{{ precipProbability }}</div>
+          <div>{{ humidity }}</div>
+        </div>
+      </main>
+      <footer>
+        <div>{{ time }}</div>
+      </footer>
+    </div>
   </div>
 
   <div id="daily">
-    <header>
-      <h2>Daily: </h2>
-      <input type="text" placeholder="City: " v-model="city">
-      <input type="text" placeholder="State: " v-model="state">
-      <button v-on:click="updateDailyWeather()">Update Weather</button>
-      <div class="daily-location location">{{ city }}, {{state}}</div>
-      <div>
-        {{ summary }}
-      </div>
-      <div>
-        <i v-bind:class="'wi wi-forecast-io-' + icon" alt="weather icon"></i>
-      </div>
-    </header>
-    <main>
-      <ul>
-        <li v-for="day in days">
-          <i v-bind:class="'daily-icon wi wi-forecast-io-' + day.icon" alt="weather icon"></i> - {{ day.summary }} - {{ getDate(day.time) }}
-        </li>
-      </ul>
-    </main>
+    <div class="contents">
+      <header>
+        <h2>Daily: </h2>
+        <input type="text" placeholder="City: " v-model="city">
+        <input type="text" placeholder="State: " v-model="state">
+        <button v-on:click="updateDailyWeather()">Update Weather</button>
+        <div class="daily-location location">{{ city }}, {{state}}</div>
+        <div>
+          {{ summary }}
+        </div>
+        <div>
+          <i v-bind:class="'wi wi-forecast-io-' + icon" alt="weather icon"></i>
+        </div>
+      </header>
+      <main>
+        <ul>
+          <li v-for="day in days">
+            <i v-bind:class="'daily-icon wi wi-forecast-io-' + day.icon" alt="weather icon"></i> - {{ day.summary }} - {{ getDate(day.time) }}
+          </li>
+        </ul>
+      </main>
+    </div>
   </div>
 
   <div id="hourly">
-    <header>
-      <h2>Hourly: </h2>
-      <input type="text" placeholder="City: " v-model="city">
-      <input type="text" placeholder="State: " v-model="state">
-      <button v-on:click="updateHourlyWeather()">Update Weather</button>
-      <div class="hourly-location location">{{ city }}, {{state}}</div>
-      <div>
-        {{ summary }}
-      </div>
-      <div>
-        <!-- 'list-' + id -->
-        <!-- wi wi-forecast-io-${iconString} -->
-        <!-- iconName(icon) -->
-        <i v-bind:class="'wi wi-forecast-io-' + icon" alt="weather icon"></i>
-      </div>
-    </header>
-    <main>
-      <ul>
-        <li v-for="hour in hours">
-          <i v-bind:class="'hourly-icon wi wi-forecast-io-' + hour.icon"></i> - {{ hour.summary }} - {{ hour.apparentTemperature }} - {{ getDate(hour.time) }}
-        </li>
-      </ul>
-    </main>
+    <div class="contents">
+      <header>
+        <h2>Hourly: </h2>
+        <input type="text" placeholder="City: " v-model="city">
+        <input type="text" placeholder="State: " v-model="state">
+        <button v-on:click="updateHourlyWeather()">Update Weather</button>
+        <div class="hourly-location location">{{ city }}, {{state}}</div>
+        <div>
+          {{ summary }}
+        </div>
+        <div>
+          <!-- 'list-' + id -->
+          <!-- wi wi-forecast-io-${iconString} -->
+          <!-- iconName(icon) -->
+          <i v-bind:class="'wi wi-forecast-io-' + icon" alt="weather icon"></i>
+        </div>
+      </header>
+      <main>
+        <ul>
+          <li v-for="hour in hours">
+            <i v-bind:class="'hourly-icon wi wi-forecast-io-' + hour.icon"></i> - {{ hour.summary }} - {{ hour.apparentTemperature }} - {{ getDate(hour.time) }}
+          </li>
+        </ul>
+      </main>
+    </div>
   </div>
 
   <div id="minutely">
-    <header>
-      <h2>Minutely: </h2>
-      <input type="text" placeholder="City: " v-model="city">
-      <input type="text" placeholder="State: " v-model="state">
-      <button v-on:click="updateMinutelyWeather()">Update Weather</button>
-      <div class="minutely-location location">{{ city }}, {{state}}</div>
-      <div>
-        {{ summary }}
-      </div>
-      <div>
-        <i v-bind:class="'wi wi-forecast-io-' + icon" alt="weather icon"></i>
-      </div>
-    </header>
-    <main>
-      <ul>
-        <li v-for="minute in minutes">
-          {{ getDate(minute.time) }} - {{ minute.precipProbability }} - {{ minute.precipIntensity }}
-        </li>
-      </ul>
-    </main>
+    <div class="contents">
+      <header>
+        <h2>Minutely: </h2>
+        <input type="text" placeholder="City: " v-model="city">
+        <input type="text" placeholder="State: " v-model="state">
+        <button v-on:click="updateMinutelyWeather()">Update Weather</button>
+        <div class="minutely-location location">{{ city }}, {{state}}</div>
+        <div>
+          {{ summary }}
+        </div>
+        <div>
+          <i v-bind:class="'wi wi-forecast-io-' + icon" alt="weather icon"></i>
+        </div>
+      </header>
+      <main>
+        <ul>
+          <li v-for="minute in minutes">
+            {{ getDate(minute.time) }} - {{ minute.precipProbability }} - {{ minute.precipIntensity }}
+          </li>
+        </ul>
+      </main>
+    </div>
   </div>
 
   <script src="/js/app.js" charset="utf-8"></script>
