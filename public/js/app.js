@@ -1,7 +1,8 @@
 var currentlyWidget = new Vue({
   el: "#currently",
   data: {
-    location: "Gainesville, FL",
+    city: "Gainesville",
+    state: "FL",
     apparentTemperature: 72,
     summary: "Partly Cloudy",
     icon: "partly-cloudy",
@@ -14,6 +15,20 @@ var currentlyWidget = new Vue({
   methods: {
     iconName: function(iconString){
       return `wi wi-forecast-io-${iconString}`;
+    },
+    getCoordinates: function(city, state){
+      var address = `${city},${state}`;
+      var url = `/location/${address}`;
+      axios.get(url)
+          .then(function(response){
+            this.latitude = response.data.results[0].geometry.location.lat;
+            this.longitude = response.data.results[0].geometry.location.lng;
+            // console.log(response.data.results[0].geometry.location.lat);
+            this.getWeather(this.latitude, this.longitude);
+          }.bind(this))
+          .catch(function(error){
+            console.log(error);
+          });
     },
     getWeather: function(lat, lon) {
       var url = `/weather/${this.latitude},${this.longitude}`;
@@ -32,11 +47,12 @@ var currentlyWidget = new Vue({
           });
     },
     updateWeather: function(){
-      this.getWeather(this.latitude, this.longitude);
+      this.getCoordinates(this.city, this.state);
+      // this.getWeather(this.latitude, this.longitude);
     }
   },
   created: function(){
-    this.getWeather(29.1, -81.4);
+    this.getCoordinates("Gainesville", "FL");
   }
 });
 
@@ -72,9 +88,6 @@ var dailyWidget = new Vue({
       }
       return `${dayOfWeek}`;
     },
-    iconName: function(iconString){
-      return `wi wi-forecast-io-${iconString}`;
-    },
     getDailyWeather: function(lat, lon){
       var url = `/weather/${lat},${lon}`;
       axios.get(url)
@@ -91,14 +104,6 @@ var dailyWidget = new Vue({
   },
   created: function(){
     this.getDailyWeather(29.1, -89.4);
-    // axios.get("/weather/29.1, -89.4")
-    //     .then(function(response){
-    //       dailyWidget.summary = response.data.daily.summary;
-    //       dailyWidget.icon = response.data.daily.icon;
-    //     })
-    //     .catch(function(error){
-    //       console.log(error);
-    //     });
   }
 });
 
@@ -120,9 +125,6 @@ var hourlyWidget = new Vue({
       var hour = date.getHours();
       var minutes = date.getMinutes();
       return `${month + 1}/${day}/${year} ${hour}:${minutes < 9 ? '0' + minutes : minutes}`;
-    },
-    iconName: function(iconString){
-      return `wi wi-forecast-io-${iconString}`;
     },
     getHourlyWeather: function(lat, lon){
       var url = `/weather/${lat},${lon}`;
@@ -181,9 +183,6 @@ var minutelyWidget = new Vue({
       var minutes = date.getMinutes();
       return `${dayOfWeek}, ${hour}:${minutes < 9 ? '0' + minutes : minutes}`;
     },
-    // iconName: function(iconString){
-    //   return `wi wi-forecast-io-${iconString}`;
-    // },
     getMinutelyWeather: function(lat, lon){
       var url = `/weather/${lat},${lon}`;
       axios.get(url)

@@ -17,10 +17,10 @@
   <div id="currently">
     <header>
       <h2>Currently:</h2>
-      <input type="text" placeholder="Latitude: " v-model="latitude">
-      <input type="text" placeholder="Longitude: " v-model="longitude">
+      <input type="text" placeholder="Latitude: " v-model="city">
+      <input type="text" placeholder="Longitude: " v-model="state">
       <button v-on:click="updateWeather()">Update Weather</button>
-      <div id="currently-location">{{ location }}</div>
+      <div id="currently-location">{{ city }}, {{state}}</div>
     </header>
     <main>
       <div>
