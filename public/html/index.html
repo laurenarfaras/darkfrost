@@ -81,6 +81,25 @@
     </main>
   </div>
 
+  <div id="minutely">
+    <header>
+      <h2>Minutely: </h2>
+      <div>
+        {{ summary }}
+      </div>
+      <div>
+        <i v-bind:class="'wi wi-forecast-io-' + icon" alt="weather icon"></i>
+      </div>
+    </header>
+    <main>
+      <ul>
+        <li v-for="minute in minutes">
+          {{ getDate(minute.time) }} - {{ minute.precipProbability }} - {{ minute.precipIntensity }}
+        </li>
+      </ul>
+    </main>
+  </div>
+
   <script src="/js/app.js" charset="utf-8"></script>
 
 </body>
