@@ -14,6 +14,27 @@
 </head>
 <body>
 
+  <div id="hourly">
+    <header>
+      <div>
+        {{ summary }}
+      </div>
+      <div>
+        <!-- 'list-' + id -->
+        <!-- wi wi-forecast-io-${iconString} -->
+        <!-- iconName(icon) -->
+        <i v-bind:class="'wi wi-forecast-io-' + icon" alt="weather icon"></i>
+      </div>
+    </header>
+    <main>
+      <ul>
+        <li v-for="hour in hours">
+          <i v-bind:class="'hourly-icon wi wi-forecast-io-' + hour.icon"></i> - {{ hour.summary }} - {{ hour.apparentTemperature }} - {{ getDate(hour.time) }}
+        </li>
+      </ul>
+    </main>
+  </div>
+
   <div id="currently">
     <header>
       <input type="text" placeholder="Latitude: " v-model="latitude">
@@ -27,7 +48,7 @@
       </div>
       <div>
         <h2>{{ summary }}</h2>
-        <div><i :class="iconName(icon)" alt="weather icon"></i></div>
+        <div><i v-bind:class="'wi wi-forecast-io-' + icon" alt="weather icon"></i></div>
       </div>
       <div>
         <h3>{{ precipProbability }}</h3>
@@ -43,7 +64,7 @@
     <div>
       <h2>{{ summary }}</h2>
       <div>
-        <i :class="iconName(icon)" alt="weather icon"></i>
+        <i v-bind:class="'wi wi-forecast-io-' + icon" alt="weather icon"></i>
       </div>
     </div>
   </div>
