@@ -44,22 +44,61 @@ var dailyWidget = new Vue({
   el: "#daily",
   data: {
     summary: "",
-    icon: "rain"
+    icon: "rain",
+    time: 10000000,
+    days: []
   },
   methods: {
+    getDate: function(seconds){
+      var date = new Date(seconds * 1000);
+      // var month = date.getMonth();
+      // var year = date.getFullYear();
+      // var day = date.getDate();
+      var dayOfWeek = date.getDay();
+      if (dayOfWeek === 0){
+        dayOfWeek = "Sun";
+      } else if (dayOfWeek === 1) {
+        dayOfWeek = "Mon";
+      } else if (dayOfWeek === 2) {
+        dayOfWeek = "Tue";
+      } else if (dayOfWeek === 3) {
+        dayOfWeek = "Wed";
+      } else if (dayOfWeek === 4) {
+        dayOfWeek = "Thu";
+      } else if (dayOfWeek === 5) {
+        dayOfWeek = "Fri";
+      } else if (dayOfWeek === 6) {
+        dayOfWeek = "Sat";
+      }
+      return `${dayOfWeek}`;
+    },
     iconName: function(iconString){
       return `wi wi-forecast-io-${iconString}`;
+    },
+    getDailyWeather: function(lat, lon){
+      var url = `/weather/${lat},${lon}`;
+      axios.get(url)
+          .then(function(response){
+            var dailyData = response.data.daily;
+            this.summary = dailyData.summary;
+            this.icon = dailyData.icon;
+            this.days = dailyData.data;
+          }.bind(this))
+          .catch(function(err){
+            console.log(err);
+          });
     }
   },
   created: function(){
-    axios.get("/weather/29.1, -89.4")
-        .then(function(response){
-          dailyWidget.summary = response.data.daily.summary;
-          dailyWidget.icon = response.data.daily.icon;
-        })
-        .catch(function(error){
-          console.log(error);
-        });
+    this.getDailyWeather(29.1, -89.4);
+    // axios.get("/weather/29.1, -89.4")
+    //     .then(function(response){
+    //       dailyWidget.summary = response.data.daily.summary;
+    //       dailyWidget.icon = response.data.daily.icon;
+    //     })
+    //     .catch(function(error){
+    //       console.log(error);
+    //     });
   }
 });
 
@@ -69,7 +108,8 @@ var hourlyWidget = new Vue({
     summary: "it's gonna rain!",
     icon: "cloudy",
     apparentTemperature: 79,
-    time: 10000000
+    time: 10000000,
+    hours: []
   },
   methods: {
     getDate: function(seconds){

@@ -8,7 +8,7 @@ body {
 }
 h2 {
   display: flex;
-  justify-content: center; 
+  justify-content: center;
 }
 
 #currently, #daily, #hourly {
@@ -27,7 +27,7 @@ i {
   margin-top: 8px;
 }
 
-.hourly-icon {
+.hourly-icon, .daily-icon {
   font-size: 1em;
 }
 

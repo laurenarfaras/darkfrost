@@ -43,13 +43,20 @@
   <div id="daily">
     <header>
       <h2>Daily: </h2>
-    </header>
-    <div>
-      <div>{{ summary }}</div>
+      <div>
+        {{ summary }}
+      </div>
       <div>
         <i v-bind:class="'wi wi-forecast-io-' + icon" alt="weather icon"></i>
       </div>
-    </div>
+    </header>
+    <main>
+      <ul>
+        <li v-for="day in days">
+          <i v-bind:class="'daily-icon wi wi-forecast-io-' + icon" alt="weather icon"></i> - {{ day.summary }} - {{ getDate(day.time) }}
+        </li>
+      </ul>
+    </main>
   </div>
 
   <div id="hourly">
