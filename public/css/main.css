@@ -1,11 +1,19 @@
+/* BODY */
 body {
   font: 300 112.5%/1.5em "Helvetica", "Arial", sans-serif;
   margin: 3em 3em 6em;
   padding: 0;
+  color: white;
+  background-color: rgba(112, 193, 179, 0.9);
+}
+h2 {
+  display: flex;
+  justify-content: center; 
 }
 
 #currently, #daily, #hourly {
-  border: 1px solid black;
+  background-color: rgba(80, 81, 79, 0.9);
+  border: 1px solid #50514F;
   border-radius: 8px;
   padding: 1.5em;
   margin: 1em;
