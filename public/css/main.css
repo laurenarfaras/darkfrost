@@ -21,6 +21,15 @@ h2 {
   width: 15em;
 }
 
+#minutely {
+  width: 25em;
+}
+
+#myChart {
+  display: flex;
+  justify-content: center;
+}
+
 i {
   font-size: 7em;
   display: flex;

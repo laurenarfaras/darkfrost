@@ -37,7 +37,7 @@ var currentlyWidget = new Vue({
             currentlyWidget.precipProbability = response.data.currently.precipProbability;
             currentlyWidget.humidity = response.data.currently.humidity;
             currentlyWidget.time = response.data.currently.time;
-            console.log(response.data);
+            // console.log(response.data);
           })
           .catch(function(error){
             console.log(error);
@@ -196,6 +196,47 @@ var minutelyWidget = new Vue({
     minutes: []
   },
   methods: {
+    createChart: function(){
+      var xy = function(item){
+        var beforeX = item.time;
+        var x = new Date(beforeX * 1000);
+        var y = item.precipProbability;
+        return {x, y};
+      };
+      var lineData = minutelyWidget.minutes.map(xy).filter(function(element, index){
+        return index%10 === 0;
+      });
+
+      var ctx = document.getElementById("myChart");
+      var scatterChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              datasets: [{
+                  label: 'Scatter Dataset',
+                  data: lineData
+              }]
+          },
+          options: {
+              scales: {
+                  xAxes: [{
+                      type: 'time',
+                      time: {
+                        unit: 'minute',
+                        unitStepSize: 10,
+                      },
+                      // position: 'bottom'
+                  }],
+                  yAxes: [{
+                    ticks: {
+                      max: 1,
+                      min: 0
+                    }
+                  }]
+              }
+          }
+      });
+
+    },
     getDate: function(seconds){
       var date = new Date(seconds * 1000);
       var month = date.getMonth();
@@ -244,6 +285,7 @@ var minutelyWidget = new Vue({
             this.icon = minutelyData.icon;
             this.minutes = minutelyData.data;
             this.apparentTemperature = minutelyData.data.apparentTemperature;
+            this.createChart();
           }.bind(this))
           .catch(function(err){
             console.log(err);

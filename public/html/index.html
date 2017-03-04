@@ -112,11 +112,9 @@
         </div>
       </header>
       <main>
-        <ul>
-          <li v-for="minute in minutes">
-            {{ getDate(minute.time) }} - {{ minute.precipProbability }} - {{ minute.precipIntensity }}
-          </li>
-        </ul>
+        <div>
+          <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
       </main>
     </div>
   </div>
